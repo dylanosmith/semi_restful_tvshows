@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+<meta http-equiv='X-UA-Compatible' content='ie=edge'>
+<!-- Bootstrap CSS -->
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous'></script>
+<title>TV Shows</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <p class="col-12 text-right"> <a href="/shows">Go Back</a></p>
+        </div>
+        <div class="row w-75 mx-auto">
+            <div class="col-12">
+                <h1 class="display-4 bg-dark text-white col-12 mx-auto">Edit Show {{show.id}}</h1>
+                {% if messages %}
+                <ul class="messages">    
+                    {% for message in messages %}    
+                    <li style="color:red" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <form action="/shows/{{show.id}}/update" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Title</label>
+                      <input type="text" class="form-control" id="exampleFormControlInput1" name="title" value="{{ show.title }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput2">Network</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput2" name="network" value="{{ show.network }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput3">Release Date</label>
+                        <input type="date" class="form-control" name="selected_date" id="exampleFormControlInput3" value="{{show.release_date|date:'Y-m-d'}}" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlTextarea1">Description</label>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" name="desc" rows="3">{{ show.desc }}</textarea>
+                    </div>
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary" type="submit">Update</button>
+                    </div>
+                  </form>
+            </div>
+            <p class="col-12 text-center"><a href="/shows/{{show.id}}">Go to Show</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
